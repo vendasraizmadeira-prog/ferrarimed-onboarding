@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#CC0000" />
+  <title>FerrariMed — Onboarding</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #CC0000;
+      --red-dark:   #A30000;
+      --red-light:  #FF1A1A;
+      --red-fade:   rgba(204,0,0,0.08);
+      --white:      #FFFFFF;
+      --bg:         #F5F5F5;
+      --card-bg:    #FFFFFF;
+      --text:       #1A1A1A;
+      --muted:      #6B6B6B;
+      --border:     #E8E8E8;
+      --shadow-sm:  0 2px 8px rgba(0,0,0,0.07);
+      --shadow-md:  0 6px 24px rgba(0,0,0,0.12);
+      --radius:     16px;
+      --radius-sm:  10px;
+      --transition: 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      /* Mobile-only: max 480px, centered */
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ─── Header ─── */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--red);
+      padding: 0 20px;
+      padding-top: env(safe-area-inset-top);
+      box-shadow: 0 2px 12px rgba(204,0,0,0.35);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--white);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg { width: 22px; height: 22px; }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-text span:first-child {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+
+    .logo-text span:last-child {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.3px;
+    }
+
+    .progress-badge {
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
+      padding: 28px 20px 32px;
+      color: var(--white);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero-tag span { width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; display: inline-block; }
+
+    .hero h1 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+
+    .hero p {
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 22px;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      height: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4ADE80;
+      border-radius: 20px;
+      transition: width 0.6s ease;
+    }
+
+    .progress-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    /* ─── Modules Section ─── */
+    .modules-section {
+      padding: 20px 16px 100px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-left: 4px;
+    }
+
+    /* ─── Module Card ─── */
+    .module-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1.5px solid var(--border);
+      transition: box-shadow var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+
+    .module-card:active { transform: scale(0.985); }
+    .module-card.active {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(204,0,0,0.12), var(--shadow-md);
+    }
+
+    .module-card.watched .card-header {
+      opacity: 0.7;
+    }
+
+    /* Card Header (always visible) */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 16px;
+      transition: background var(--transition);
+      user-select: none;
+    }
+
+    .module-card.active .card-header {
+      background: var(--red-fade);
+    }
+
+    .module-number {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: var(--red-fade);
+      border: 1.5px solid rgba(204,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .module-card.active .module-number {
+      background: var(--red);
+      border-color: var(--red);
+    }
+
+    .module-number .num-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--red);
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .module-card.active .module-number .num-label { color: rgba(255,255,255,0.7); }
+
+    .module-number .num-value {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .module-card.active .module-number .num-value { color: var(--white); }
+
+    .card-info { flex: 1; min-width: 0; }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-duration {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .card-duration svg { opacity: 0.5; }
+
+    .watched-badge {
+      display: none;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #16A34A;
+      background: #DCFCE7;
+      border-radius: 10px;
+      padding: 2px 7px;
+    }
+
+    .module-card.watched .watched-badge { display: inline-flex; }
+
+    .card-chevron {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .module-card.active .card-chevron {
+      background: var(--red);
+      transform: rotate(180deg);
+    }
+
+    .card-chevron svg { transition: stroke var(--transition); }
+    .module-card.active .card-chevron svg { stroke: var(--white); }
+
+    /* Card Description (optional visible strip) */
+    .card-desc {
+      padding: 0 16px 14px 72px;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Player Container */
+    .player-wrap {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .module-card.active .player-wrap {
+      max-height: 420px;
+    }
+
+    .player-inner {
+      padding: 0 0 12px;
+      animation: slideUp 0.38s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .player-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 0 14px;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 */
+      background: #000;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Placeholder shown when no video ID */
+    .video-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #1a1a1a 0%, #2d0000 100%);
+      color: var(--white);
+      gap: 10px;
+    }
+
+    .video-placeholder svg { opacity: 0.5; }
+
+    .video-placeholder p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .player-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px 4px;
+    }
+
+    .player-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .mark-watched-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background var(--transition);
+      font-family: inherit;
+    }
+
+    .mark-watched-btn:active { background: var(--red-dark); }
+
+    .module-card.watched .mark-watched-btn {
+      background: #16A34A;
+    }
+
+    /* ─── Floating Footer ─── */
+    .footer-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      padding: 12px 20px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 90;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-info span:first-child {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-info span:last-child {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .footer-contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.2px;
+    }
+
+    /* ─── Responsive guard — desktop hint ─── */
+    @media (min-width: 481px) {
+      body::before {
+        content: '';
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: #F0F0F0;
+        z-index: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">
+        <!-- Ferrari "F" shield icon -->
+        <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 2L4 5V11C4 15.4 7 19.2 11 20.5C15 19.2 18 15.4 18 11V5L11 2Z" fill="#CC0000"/>
+          <path d="M8 8H13M8 11H12M8 14H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span>FerrariMed</span>
+        <span>Contabilidade</span>
+      </div>
+    </div>
+    <div class="progress-badge" id="progressBadge">0 / 12</div>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-tag"><span></span> Plataforma de Onboarding</div>
+  <h1>Bem-vindo à<br>sua jornada!</h1>
+  <p>Assista aos vídeos em ordem e conheça tudo sobre sua contabilidade médica com a FerrariMed.</p>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 de 12 módulos concluídos</div>
+</section>
+
+<!-- ═══ MODULES ═══ -->
+<main class="modules-section">
+  <p class="section-title">12 Módulos</p>
+
+  <!-- MODULE CARDS — each data-video="YOUTUBE_VIDEO_ID" -->
+
+  <div class="module-card" data-module="1" data-video="YOUTUBE_ID_01" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">01</span></div>
+      <div class="card-info">
+        <div class="card-title">Boas-Vindas à FerrariMed</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2–3 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Conheça a equipe FerrariMed: Junior Ferrari (CEO), Leonardo Baroni, Gustavo Pereira, Stefani Leal e Katrine Cardoso.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-1"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 01</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">
+            ✓ Marcar como assistido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="2" data-video="YOUTUBE_ID_02" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">02</span></div>
+      <div class="card-info">
+        <div class="card-title">Abrindo sua Conta PJ</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            3–4 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Por que abrir conta PJ? Conheça as melhores opções: Cora, Nubank PJ, Inter PJ, BB, Bradesco e Santander. Reserve ~15% para impostos.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-2"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 02</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="3" data-video="YOUTUBE_ID_03" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">03</span></div>
+      <div class="card-info">
+        <div class="card-title">Cadastro no CRM-PJ</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2–3 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Registro da empresa médica no Conselho Regional de Medicina. Prazo de até 30 dias. 80% da taxa é reembolsada. A FerrariMed conduz todo o processo.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-3"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 03</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="4" data-video="YOUTUBE_ID_04" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">04</span></div>
+      <div class="card-info">
+        <div class="card-title">LGPD – Proteção de Dados</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Lei 13.709/2018. Segurança e privacidade dos seus dados na FerrariMed. Nenhuma informação compartilhada sem autorização.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-4"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 04</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="5" data-video="YOUTUBE_ID_05" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">05</span></div>
+      <div class="card-info">
+        <div class="card-title">Entendendo o Simples Nacional</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            4–5 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">DAS unificado a partir de 6%. Exemplos práticos: R$20k/mês → ~10,38% e R$40k/mês → ~16,95%. Reserve 15% da receita.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-5"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 05</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="6" data-video="YOUTUBE_ID_06" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">06</span></div>
+      <div class="card-info">
+        <div class="card-title">Pró-Labore, INSS e IR</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            4–5 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Pró-labore mínimo de 28% para usar o Fator R (Anexo III). INSS 11% sobre pró-labore. IRRF acima de R$2.428,80 líquido.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-6"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 06</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="7" data-video="YOUTUBE_ID_07" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">07</span></div>
+      <div class="card-info">
+        <div class="card-title">Guias Mensais: DAS, DARF e Honorários</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            3–4 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Três pagamentos mensais, todos com vencimento no dia 20: DAS (Simples Nacional), DARF (INSS + IR do pró-labore) e Honorários FerrariMed.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-7"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 07</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="8" data-video="YOUTUBE_ID_08" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">08</span></div>
+      <div class="card-info">
+        <div class="card-title">Lucro Presumido vs. Simples Nacional</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            4 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Lucro Presumido: PIS+COFINS+CSLL+IRPJ+ISS = ~13,33–16,33%. Avaliado caso a caso para receitas acima de R$35k/mês.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-8"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 08</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="9" data-video="YOUTUBE_ID_09" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">09</span></div>
+      <div class="card-info">
+        <div class="card-title">Taxa de Fiscalização (TFF)</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Taxa anual de licença de funcionamento municipal (TFF, TFEL ou TLFV). Pode haver cobrança adicional em alterações contratuais.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-9"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 09</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="10" data-video="YOUTUBE_ID_10" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">10</span></div>
+      <div class="card-info">
+        <div class="card-title">Como Falar com Nossa Equipe</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2–3 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">WhatsApp oficial: (17) 3556-1190. Seg–Qui 08h–17h, Sex 08h–16h. Menu: 1=Financeiro, 2=Pessoal, 3=NFS-e, 4=Atendente e mais.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-10"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 10</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="11" data-video="YOUTUBE_ID_11" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">11</span></div>
+      <div class="card-info">
+        <div class="card-title">Calendário Financeiro e Guias</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2–3 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Guias enviadas nas primeiras duas semanas via WhatsApp, e-mail e App Onvio/Client Center. Vencimento sempre no dia 20.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-11"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 11</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-card" data-module="12" data-video="YOUTUBE_ID_12" onclick="toggleModule(this)">
+    <div class="card-header">
+      <div class="module-number"><span class="num-label">MOD</span><span class="num-value">12</span></div>
+      <div class="card-info">
+        <div class="card-title">Indicação e Ecossistema FerrariMed</div>
+        <div class="card-meta">
+          <span class="card-duration">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2–3 min
+          </span>
+          <span class="watched-badge">✓ Assistido</span>
+        </div>
+      </div>
+      <div class="card-chevron">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+    <div class="card-desc">Programa de indicação com pagamento cumulativo. Ecossistema: Seguro RC, Certificado Digital, Licitações, Saúde e Segurança do Trabalho.</div>
+    <div class="player-wrap">
+      <div class="player-inner">
+        <div class="player-divider"></div>
+        <div class="video-container" id="vc-12"></div>
+        <div class="player-actions">
+          <span class="player-label">Módulo 12</span>
+          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══ FOOTER BAR ═══ -->
+<div class="footer-bar">
+  <div class="footer-info">
+    <span>Dúvidas?</span>
+    <span>Fale com a nossa equipe</span>
+  </div>
+  <a class="footer-contact" href="https://wa.me/551735561190" target="_blank">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    WhatsApp
+  </a>
+</div>
+
+<script>
+  // ─── Video IDs — substitua os valores abaixo pelos IDs reais do YouTube ───
+  const VIDEO_IDS = {
+    1:  'YOUTUBE_ID_01',
+    2:  'YOUTUBE_ID_02',
+    3:  'YOUTUBE_ID_03',
+    4:  'YOUTUBE_ID_04',
+    5:  'YOUTUBE_ID_05',
+    6:  'YOUTUBE_ID_06',
+    7:  'YOUTUBE_ID_07',
+    8:  'YOUTUBE_ID_08',
+    9:  'YOUTUBE_ID_09',
+    10: 'YOUTUBE_ID_10',
+    11: 'YOUTUBE_ID_11',
+    12: 'YOUTUBE_ID_12',
+  };
+
+  let currentOpen = null;
+  const WATCHED_KEY = 'ferrarimed_watched';
+  let watchedSet = new Set(JSON.parse(localStorage.getItem(WATCHED_KEY) || '[]'));
+
+  // Restore watched state on load
+  document.querySelectorAll('.module-card').forEach(card => {
+    const mod = parseInt(card.dataset.module);
+    if (watchedSet.has(mod)) card.classList.add('watched');
+  });
+  updateProgress();
+
+  function toggleModule(card) {
+    const mod = parseInt(card.dataset.module);
+    const vcEl = document.getElementById('vc-' + mod);
+    const videoId = VIDEO_IDS[mod];
+    const isOpen = card.classList.contains('active');
+
+    // Close any open card & stop its video
+    if (currentOpen && currentOpen !== card) {
+      const prevMod = parseInt(currentOpen.dataset.module);
+      currentOpen.classList.remove('active');
+      const prevVc = document.getElementById('vc-' + prevMod);
+      prevVc.innerHTML = '';
+    }
+
+    if (isOpen) {
+      // Close this one
+      card.classList.remove('active');
+      vcEl.innerHTML = '';
+      currentOpen = null;
+
+      // Scroll card into view
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    } else {
+      // Open this one
+      card.classList.add('active');
+      currentOpen = card;
+
+      // Inject player
+      const isPlaceholder = videoId.startsWith('YOUTUBE_ID_');
+      if (isPlaceholder) {
+        vcEl.innerHTML = `
+          <div class="video-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>
+            <p>Vídeo em breve.<br>Substitua o ID do YouTube no código.</p>
+          </div>`;
+      } else {
+        vcEl.innerHTML = `<iframe
+          src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>`;
+      }
+
+      // Scroll into view after animation starts
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+    }
+  }
+
+  function markWatched(event, card) {
+    event.stopPropagation(); // Don't toggle the card
+    const mod = parseInt(card.dataset.module);
+    if (!watchedSet.has(mod)) {
+      watchedSet.add(mod);
+      card.classList.add('watched');
+      localStorage.setItem(WATCHED_KEY, JSON.stringify([...watchedSet]));
+      updateProgress();
+
+      // Button feedback
+      const btn = card.querySelector('.mark-watched-btn');
+      btn.textContent = '✓ Assistido!';
+      setTimeout(() => { btn.textContent = '✓ Marcar como assistido'; }, 1500);
+    }
+  }
+
+  function updateProgress() {
+    const total = 12;
+    const done = watchedSet.size;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      done === total
+        ? '🎉 Todos os módulos concluídos!'
+        : `${done} de ${total} módulos concluídos`;
+    document.getElementById('progressBadge').textContent = `${done} / ${total}`;
+  }
+</script>
+</body>
+</html>
