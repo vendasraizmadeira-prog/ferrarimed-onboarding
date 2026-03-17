@@ -910,20 +910,25 @@
 </div>
 
 <script>
-  // ─── Video IDs — substitua os valores abaixo pelos IDs reais do YouTube ───
+  // ─── Configuração dos vídeos ─────────────────────────────────────────────
+  // Para cada módulo defina: { id: 'ID_DO_VIDEO', plataforma: 'vimeo' ou 'youtube' }
+  //
+  // VIMEO  → o ID é o número na URL: vimeo.com/76979871  →  id: '76979871'
+  // YOUTUBE → o ID vem após ?v=:    youtu.be/dQw4w9WgXcQ  →  id: 'dQw4w9WgXcQ'
+  //
   const VIDEO_IDS = {
-    1:  'knRc5PdKvHI',
-    2:  'YOUTUBE_ID_02',
-    3:  'YOUTUBE_ID_03',
-    4:  'YOUTUBE_ID_04',
-    5:  'YOUTUBE_ID_05',
-    6:  'YOUTUBE_ID_06',
-    7:  'YOUTUBE_ID_07',
-    8:  'YOUTUBE_ID_08',
-    9:  'YOUTUBE_ID_09',
-    10: 'YOUTUBE_ID_10',
-    11: 'YOUTUBE_ID_11',
-    12: 'YOUTUBE_ID_12',
+    1:  { id: 'knRc5PdKvHI',   plataforma: 'youtube' }, // ← módulo 01 já adicionado
+    2:  { id: 'YOUTUBE_ID_02', plataforma: 'youtube' },
+    3:  { id: 'YOUTUBE_ID_03', plataforma: 'youtube' },
+    4:  { id: 'YOUTUBE_ID_04', plataforma: 'youtube' },
+    5:  { id: 'YOUTUBE_ID_05', plataforma: 'youtube' },
+    6:  { id: 'YOUTUBE_ID_06', plataforma: 'youtube' },
+    7:  { id: 'YOUTUBE_ID_07', plataforma: 'youtube' },
+    8:  { id: 'YOUTUBE_ID_08', plataforma: 'youtube' },
+    9:  { id: 'YOUTUBE_ID_09', plataforma: 'youtube' },
+    10: { id: 'YOUTUBE_ID_10', plataforma: 'youtube' },
+    11: { id: 'YOUTUBE_ID_11', plataforma: 'youtube' },
+    12: { id: 'YOUTUBE_ID_12', plataforma: 'youtube' },
   };
 
   let currentOpen = null;
@@ -937,10 +942,29 @@
   });
   updateProgress();
 
+  function buildIframe(video) {
+    const { id, plataforma } = video;
+    if (plataforma === 'vimeo') {
+      return `<iframe
+        src="https://player.vimeo.com/video/${id}?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&dnt=1"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>`;
+    }
+    // YouTube — parâmetros que minimizam branding e sugestões
+    return `<iframe
+      src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>`;
+  }
+
   function toggleModule(card) {
     const mod = parseInt(card.dataset.module);
     const vcEl = document.getElementById('vc-' + mod);
-    const videoId = VIDEO_IDS[mod];
+    const video = VIDEO_IDS[mod];
     const isOpen = card.classList.contains('active');
 
     // Close any open card & stop its video
@@ -952,36 +976,26 @@
     }
 
     if (isOpen) {
-      // Close this one
       card.classList.remove('active');
       vcEl.innerHTML = '';
       currentOpen = null;
-
-      // Scroll card into view
       setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
     } else {
-      // Open this one
       card.classList.add('active');
       currentOpen = card;
 
-      // Inject player
-      const isPlaceholder = videoId.startsWith('YOUTUBE_ID_');
+      const isPlaceholder = video.id.startsWith('YOUTUBE_ID_') || video.id.startsWith('VIMEO_ID_');
       if (isPlaceholder) {
+        const label = video.plataforma === 'vimeo' ? 'Vimeo' : 'YouTube';
         vcEl.innerHTML = `
           <div class="video-placeholder">
             <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>
-            <p>Vídeo em breve.<br>Substitua o ID do YouTube no código.</p>
+            <p>Vídeo em breve.<br>Cole o ID do ${label} no código.</p>
           </div>`;
       } else {
-        vcEl.innerHTML = `<iframe
-          src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen
-          loading="lazy"
-        ></iframe>`;
+        vcEl.innerHTML = buildIframe(video);
       }
 
-      // Scroll into view after animation starts
       setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
     }
   }
