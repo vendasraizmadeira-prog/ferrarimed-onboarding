@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Win10/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/b626fe04-bc16-411e-b102-861ed8e5e306/ba9063ed-6af5-4980-b6b6-22435dc9c2ae/skills/docx/**)",
+      "Bash(pandoc \"C:\\\\Users\\\\Win10\\\\Programa ferrari\\\\Roteiros_Modulos_Onboarding_FerrariMed.docx\" -o /tmp/ferrari_script.md)",
+      "Read(//tmp/**)",
+      "Bash(powershell -Command \":*)",
+      "Bash(powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Win10\\\\extract_docx.ps1\")"
+    ]
+  }
+}
