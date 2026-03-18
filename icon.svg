@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <!-- Red cross shape -->
+  <rect x="64" y="8"  width="64" height="176" rx="14" fill="#CC0000"/>
+  <rect x="8"  y="64" width="176" height="64"  rx="14" fill="#CC0000"/>
+  <!-- White hands + heart at center -->
+  <path d="M96 128
+    C72 112, 54 99, 54 82
+    C54 70, 64 63, 74 68
+    C80 71, 96 84, 96 84
+    C96 84, 112 71, 118 68
+    C128 63, 138 70, 138 82
+    C138 99, 120 112, 96 128Z"
+    fill="white"/>
+</svg>
