@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#CC0000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FerrariMed" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.svg" />
   <title>FerrariMed — Onboarding</title>
   <style>
     /* ─── Reset & Base ─── */
@@ -34,7 +39,6 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100dvh;
-      /* Mobile-only: max 480px, centered */
       max-width: 480px;
       margin: 0 auto;
       position: relative;
@@ -51,139 +55,123 @@
       padding-top: env(safe-area-inset-top);
       box-shadow: 0 2px 12px rgba(204,0,0,0.35);
     }
-
     .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 60px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 10px; }
     .logo-icon {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       background: var(--white);
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
     .logo-icon svg { width: 22px; height: 22px; }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .logo-text span:first-child {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: 0.5px;
-    }
-
-    .logo-text span:last-child {
-      font-size: 10px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.75);
-      letter-spacing: 0.3px;
-    }
-
+    .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+    .logo-text span:first-child { font-size: 15px; font-weight: 800; color: var(--white); letter-spacing: 0.5px; }
+    .logo-text span:last-child  { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.75); }
     .progress-badge {
       background: rgba(255,255,255,0.2);
       color: var(--white);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.3px;
+      font-size: 11px; font-weight: 700;
+      padding: 4px 10px; border-radius: 20px;
     }
 
     /* ─── Hero ─── */
     .hero {
       background: linear-gradient(160deg, var(--red) 0%, var(--red-dark) 100%);
-      padding: 28px 20px 32px;
+      padding: 28px 20px 28px;
       color: var(--white);
     }
-
     .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      display: inline-flex; align-items: center; gap: 6px;
       background: rgba(255,255,255,0.18);
       border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 14px;
     }
-
     .hero-tag span { width: 6px; height: 6px; background: #4ADE80; border-radius: 50%; display: inline-block; }
+    .hero h1 { font-size: 24px; font-weight: 800; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.3px; }
+    .hero p  { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.82); margin-bottom: 22px; }
+    .progress-wrap { background: rgba(255,255,255,0.15); border-radius: 20px; height: 6px; overflow: hidden; margin-bottom: 8px; }
+    .progress-bar  { height: 100%; width: 0%; background: #4ADE80; border-radius: 20px; transition: width 0.6s ease; }
+    .progress-row  { display: flex; align-items: center; justify-content: space-between; }
+    .progress-label { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 500; }
 
-    .hero h1 {
-      font-size: 24px;
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 8px;
-      letter-spacing: -0.3px;
+    /* ── Idea 4: Tempo restante ── */
+    .time-remaining {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; color: rgba(255,255,255,0.65); font-weight: 500;
     }
+    .time-remaining svg { opacity: 0.7; }
 
-    .hero p {
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 22px;
+    /* ─── PWA Install Banner (Idea 5) ─── */
+    .pwa-banner {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      animation: slideDown 0.3s ease;
     }
-
-    /* Progress bar */
-    .progress-wrap {
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      height: 6px;
-      overflow: hidden;
-      margin-bottom: 8px;
+    .pwa-banner.show { display: flex; }
+    @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+    .pwa-banner-icon {
+      width: 40px; height: 40px; background: var(--red);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: #4ADE80;
-      border-radius: 20px;
-      transition: width 0.6s ease;
+    .pwa-banner-icon svg { width: 22px; height: 22px; }
+    .pwa-banner-text { flex: 1; }
+    .pwa-banner-text strong { font-size: 13px; font-weight: 700; display: block; }
+    .pwa-banner-text span   { font-size: 11px; color: var(--muted); }
+    .pwa-banner-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .pwa-install-btn {
+      background: var(--red); color: var(--white);
+      border: none; border-radius: 8px; padding: 7px 12px;
+      font-size: 12px; font-weight: 700; cursor: pointer; font-family: inherit;
     }
-
-    .progress-label {
-      font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      font-weight: 500;
+    .pwa-dismiss-btn {
+      background: none; border: none;
+      color: var(--muted); font-size: 18px; cursor: pointer; padding: 4px; line-height: 1;
     }
 
     /* ─── Modules Section ─── */
-    .modules-section {
-      padding: 20px 16px 100px;
-    }
+    .modules-section { padding: 20px 16px 110px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .section-title  { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding-left: 4px; }
 
-    .section-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      padding-left: 4px;
+    /* ── Idea 2: Continue card ── */
+    .continue-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(204,0,0,0.3);
+      border: none; width: 100%; text-align: left;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pulseIn 0.4s cubic-bezier(0.4,0,0.2,1);
     }
+    @keyframes pulseIn { from { opacity:0; transform: scale(0.97); } to { opacity:1; transform: scale(1); } }
+    .continue-card:active { transform: scale(0.97); }
+    .continue-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .continue-text { flex: 1; min-width: 0; }
+    .continue-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.5px; }
+    .continue-title { font-size: 14px; font-weight: 800; color: var(--white); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .continue-arrow { color: rgba(255,255,255,0.7); font-size: 20px; flex-shrink: 0; }
 
     /* ─── Module Card ─── */
     .module-card {
@@ -196,301 +184,229 @@
       transition: box-shadow var(--transition), border-color var(--transition);
       cursor: pointer;
     }
-
     .module-card:active { transform: scale(0.985); }
     .module-card.active {
       border-color: var(--red);
       box-shadow: 0 0 0 3px rgba(204,0,0,0.12), var(--shadow-md);
     }
+    .module-card.watched .card-header { opacity: 0.7; }
 
-    .module-card.watched .card-header {
-      opacity: 0.7;
+    /* ── Idea 9: Locked state ── */
+    .module-card.locked {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .module-card.locked .card-header { filter: grayscale(0.3); }
+    .lock-icon {
+      flex-shrink: 0;
+      width: 28px; height: 28px;
+      background: var(--bg);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
     }
 
-    /* Card Header (always visible) */
+    /* Card Header */
     .card-header {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 16px;
-      transition: background var(--transition);
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px; transition: background var(--transition);
       user-select: none;
     }
-
-    .module-card.active .card-header {
-      background: var(--red-fade);
-    }
-
+    .module-card.active .card-header { background: var(--red-fade); }
     .module-number {
-      flex-shrink: 0;
-      width: 42px;
-      height: 42px;
+      flex-shrink: 0; width: 42px; height: 42px;
       border-radius: 12px;
       background: var(--red-fade);
       border: 1.5px solid rgba(204,0,0,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
       transition: background var(--transition), border-color var(--transition);
     }
-
-    .module-card.active .module-number {
-      background: var(--red);
-      border-color: var(--red);
-    }
-
-    .module-number .num-label {
-      font-size: 8px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--red);
-      text-transform: uppercase;
-      line-height: 1;
-    }
-
+    .module-card.active .module-number { background: var(--red); border-color: var(--red); }
+    .module-number .num-label { font-size: 8px; font-weight: 700; letter-spacing: 0.5px; color: var(--red); text-transform: uppercase; line-height: 1; }
     .module-card.active .module-number .num-label { color: rgba(255,255,255,0.7); }
-
-    .module-number .num-value {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--red);
-      line-height: 1;
-    }
-
+    .module-number .num-value { font-size: 16px; font-weight: 800; color: var(--red); line-height: 1; }
     .module-card.active .module-number .num-value { color: var(--white); }
 
     .card-info { flex: 1; min-width: 0; }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .card-duration {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11.5px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
+    .card-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-meta  { display: flex; align-items: center; gap: 8px; }
+    .card-duration { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--muted); font-weight: 500; }
     .card-duration svg { opacity: 0.5; }
-
-    .watched-badge {
-      display: none;
-      align-items: center;
-      gap: 3px;
-      font-size: 10px;
-      font-weight: 700;
-      color: #16A34A;
-      background: #DCFCE7;
-      border-radius: 10px;
-      padding: 2px 7px;
-    }
-
+    .watched-badge { display: none; align-items: center; gap: 3px; font-size: 10px; font-weight: 700; color: #16A34A; background: #DCFCE7; border-radius: 10px; padding: 2px 7px; }
     .module-card.watched .watched-badge { display: inline-flex; }
 
     .card-chevron {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--bg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-shrink: 0; width: 28px; height: 28px;
+      border-radius: 50%; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
       transition: background var(--transition), transform var(--transition);
     }
-
-    .module-card.active .card-chevron {
-      background: var(--red);
-      transform: rotate(180deg);
-    }
-
+    .module-card.active .card-chevron { background: var(--red); transform: rotate(180deg); }
     .card-chevron svg { transition: stroke var(--transition); }
     .module-card.active .card-chevron svg { stroke: var(--white); }
 
-    /* Card Description (optional visible strip) */
-    .card-desc {
-      padding: 0 16px 14px 72px;
-      font-size: 12.5px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .card-desc { padding: 0 16px 14px 72px; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
 
-    /* Player Container */
-    .player-wrap {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .module-card.active .player-wrap {
-      max-height: 420px;
-    }
-
-    .player-inner {
-      padding: 0 0 12px;
-      animation: slideUp 0.38s cubic-bezier(0.4, 0, 0.2, 1) both;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .player-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 0 0 14px;
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-top: 56.25%; /* 16:9 */
-      background: #000;
-      overflow: hidden;
-    }
-
-    .video-container iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    /* Placeholder shown when no video ID */
+    /* Player */
+    .player-wrap { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+    .module-card.active .player-wrap { max-height: 900px; }
+    .player-inner { padding: 0 0 12px; animation: slideUp 0.38s cubic-bezier(0.4, 0, 0.2, 1) both; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .player-divider { height: 1px; background: var(--border); margin: 0 0 14px; }
+    .video-container { position: relative; width: 100%; padding-top: 56.25%; background: #000; overflow: hidden; }
+    .video-container iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
     .video-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       background: linear-gradient(145deg, #1a1a1a 0%, #2d0000 100%);
-      color: var(--white);
-      gap: 10px;
+      color: var(--white); gap: 10px;
     }
-
     .video-placeholder svg { opacity: 0.5; }
+    .video-placeholder p { font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 0 20px; }
 
-    .video-placeholder p {
-      font-size: 12px;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 0 20px;
-    }
-
-    .player-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px 4px;
-    }
-
-    .player-label {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
+    .player-actions { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 4px; }
+    .player-label   { font-size: 11px; color: var(--muted); font-weight: 500; }
     .mark-watched-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--red);
-      color: var(--white);
-      border: none;
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background var(--transition);
-      font-family: inherit;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--red); color: var(--white);
+      border: none; border-radius: 20px; padding: 6px 14px;
+      font-size: 12px; font-weight: 700; cursor: pointer;
+      transition: background var(--transition); font-family: inherit;
     }
-
     .mark-watched-btn:active { background: var(--red-dark); }
+    .module-card.watched .mark-watched-btn { background: #16A34A; }
 
-    .module-card.watched .mark-watched-btn {
-      background: #16A34A;
+    /* ── Idea 6: Key Points ── */
+    .key-points {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
     }
+    .module-card.watched .key-points { max-height: 300px; opacity: 1; }
+    .key-points-inner { padding: 10px 16px 14px; border-top: 1px solid var(--border); margin-top: 8px; }
+    .key-points-title { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 8px; }
+    .key-point {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12.5px; color: var(--text); line-height: 1.45;
+      padding: 4px 0;
+    }
+    .key-point-dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
 
-    /* ─── Floating Footer ─── */
-    .footer-bar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 480px;
+    /* ── Idea 7: Calculadora ── */
+    .calc-section { padding: 12px 16px 4px; border-top: 1px solid var(--border); }
+    .calc-title { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 10px; }
+    .calc-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .calc-input {
+      flex: 1; border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 9px 12px; font-size: 14px; font-weight: 600;
+      font-family: inherit; color: var(--text); outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .calc-input:focus { border-color: var(--red); }
+    .calc-btn {
+      background: var(--red); color: var(--white);
+      border: none; border-radius: 10px; padding: 9px 16px;
+      font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+      white-space: nowrap;
+    }
+    .calc-results { display: none; }
+    .calc-results.show { display: block; }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+    .calc-item {
+      background: var(--bg); border-radius: 10px; padding: 10px 12px;
+    }
+    .calc-item.full { grid-column: 1 / -1; background: var(--red-fade); border: 1px solid rgba(204,0,0,0.15); }
+    .calc-item-label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .calc-item-value { font-size: 16px; font-weight: 800; color: var(--text); margin-top: 2px; }
+    .calc-item.full .calc-item-value { color: var(--red); font-size: 18px; }
+    .calc-note { font-size: 10.5px; color: var(--muted); line-height: 1.45; padding: 0 0 8px; }
+
+    /* ─── Glossário (Idea 8) ─── */
+    .glossary-fab {
+      position: fixed; bottom: 90px; right: calc(50% - 228px);
+      width: 44px; height: 44px;
       background: var(--white);
-      border-top: 1px solid var(--border);
-      padding: 12px 20px;
-      padding-bottom: calc(12px + env(safe-area-inset-bottom));
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 90;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      cursor: pointer; z-index: 80;
+      font-size: 18px; font-weight: 800; color: var(--red);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .glossary-fab:active { transform: scale(0.92); }
+    @media (max-width: 480px) { .glossary-fab { right: 16px; } }
 
-    .footer-info {
-      display: flex;
-      flex-direction: column;
+    .glossary-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
     }
+    .glossary-backdrop.show { opacity: 1; pointer-events: all; }
 
-    .footer-info span:first-child {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
+    .glossary-sheet {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%);
+      width: 100%; max-width: 480px;
+      background: var(--white);
+      border-radius: 20px 20px 0 0;
+      z-index: 201;
+      padding: 0 0 env(safe-area-inset-bottom);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 80dvh; overflow: hidden;
+      display: flex; flex-direction: column;
     }
+    .glossary-sheet.show { transform: translateX(-50%) translateY(0); }
 
-    .footer-info span:last-child {
-      font-size: 11px;
-      color: var(--muted);
+    .glossary-handle { width: 36px; height: 4px; background: var(--border); border-radius: 4px; margin: 12px auto 0; }
+    .glossary-header { padding: 14px 20px 12px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .glossary-header h3 { font-size: 16px; font-weight: 800; }
+    .glossary-close { background: var(--bg); border: none; border-radius: 50%; width: 30px; height: 30px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+
+    .glossary-list { overflow-y: auto; padding: 12px 20px 20px; -webkit-overflow-scrolling: touch; }
+    .glossary-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .glossary-item:last-child { border-bottom: none; }
+    .glossary-term { font-size: 13px; font-weight: 800; color: var(--red); margin-bottom: 3px; }
+    .glossary-def  { font-size: 12.5px; color: var(--text); line-height: 1.5; }
+
+    /* ─── Toast (Idea 12) ─── */
+    .toast {
+      position: fixed; top: 76px; left: 50%; transform: translateX(-50%) translateY(-20px);
+      width: calc(100% - 32px); max-width: 448px;
+      background: #1A1A1A; color: var(--white);
+      border-radius: 14px; padding: 14px 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+      z-index: 300;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
+    .toast.show { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .toast-icon { font-size: 20px; flex-shrink: 0; line-height: 1; }
+    .toast-body { flex: 1; }
+    .toast-body strong { font-size: 13px; font-weight: 700; display: block; margin-bottom: 2px; }
+    .toast-body span   { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+    .toast-close { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 18px; cursor: pointer; padding: 0; line-height: 1; flex-shrink: 0; }
 
+    /* ─── Footer Bar ─── */
+    .footer-bar {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 480px;
+      background: var(--white); border-top: 1px solid var(--border);
+      padding: 12px 20px; padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 90; box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+    .footer-info { display: flex; flex-direction: column; }
+    .footer-info span:first-child { font-size: 13px; font-weight: 700; color: var(--text); }
+    .footer-info span:last-child  { font-size: 11px; color: var(--muted); }
     .footer-contact {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--red);
-      color: var(--white);
-      border-radius: 12px;
-      padding: 8px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      text-decoration: none;
-      letter-spacing: 0.2px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--red); color: var(--white);
+      border-radius: 12px; padding: 8px 14px;
+      font-size: 12px; font-weight: 700; text-decoration: none;
     }
 
-    /* ─── Responsive guard — desktop hint ─── */
     @media (min-width: 481px) {
-      body::before {
-        content: '';
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: #F0F0F0;
-        z-index: -1;
-      }
+      body::before { content: ''; display: block; position: fixed; inset: 0; background: #F0F0F0; z-index: -1; }
     }
   </style>
 </head>
@@ -501,7 +417,6 @@
   <div class="header-inner">
     <div class="logo">
       <div class="logo-icon">
-        <!-- Ferrari "F" shield icon -->
         <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M11 2L4 5V11C4 15.4 7 19.2 11 20.5C15 19.2 18 15.4 18 11V5L11 2Z" fill="#CC0000"/>
           <path d="M8 8H13M8 11H12M8 14H11" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -516,6 +431,21 @@
   </div>
 </header>
 
+<!-- ═══ PWA INSTALL BANNER (Idea 5) ═══ -->
+<div class="pwa-banner" id="pwaBanner">
+  <div class="pwa-banner-icon">
+    <svg viewBox="0 0 22 22" fill="none"><path d="M11 2L4 5V11C4 15.4 7 19.2 11 20.5C15 19.2 18 15.4 18 11V5L11 2Z" fill="white"/><path d="M8 8H13M8 11H12M8 14H11" stroke="#CC0000" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+  <div class="pwa-banner-text">
+    <strong>Instalar na tela inicial</strong>
+    <span>Acesse como um app, sem abrir o browser</span>
+  </div>
+  <div class="pwa-banner-actions">
+    <button class="pwa-install-btn" id="pwaInstallBtn">Instalar</button>
+    <button class="pwa-dismiss-btn" id="pwaDismissBtn">✕</button>
+  </div>
+</div>
+
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-tag"><span></span> Plataforma de Onboarding</div>
@@ -524,380 +454,424 @@
   <div class="progress-wrap">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-  <div class="progress-label" id="progressLabel">0 de 12 módulos concluídos</div>
+  <div class="progress-row">
+    <div class="progress-label" id="progressLabel">0 de 12 módulos concluídos</div>
+    <!-- Idea 4: Tempo restante -->
+    <div class="time-remaining" id="timeRemaining">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span id="timeRemainingText">~36 min restantes</span>
+    </div>
+  </div>
 </section>
 
 <!-- ═══ MODULES ═══ -->
 <main class="modules-section">
-  <p class="section-title">12 Módulos</p>
+  <div class="section-header">
+    <p class="section-title">12 Módulos</p>
+  </div>
 
-  <!-- MODULE CARDS — each data-video="YOUTUBE_VIDEO_ID" -->
+  <!-- Idea 2: Continue card — injetado via JS -->
+  <div id="continueCardSlot"></div>
 
-  <div class="module-card" data-module="1" data-video="YOUTUBE_ID_01" onclick="toggleModule(this)">
+  <!-- ─── MODULE 01 ─── -->
+  <div class="module-card" data-module="1" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">01</span></div>
       <div class="card-info">
         <div class="card-title">Boas-Vindas à FerrariMed</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2–3 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2–3 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
     <div class="card-desc">Conheça a equipe FerrariMed: Junior Ferrari (CEO), Leonardo Baroni, Gustavo Pereira, Stefani Leal e Katrine Cardoso.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-1"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 01</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">
-            ✓ Marcar como assistido
-          </button>
-        </div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-1"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 01</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <!-- Idea 6: Key Points -->
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Equipe especializada: CEO, Gestor Geral, Fiscal, Administrativo e Customer Success</div>
+        <div class="key-point"><div class="key-point-dot"></div>Missão de ser a contabilidade mais próxima do médico</div>
+        <div class="key-point"><div class="key-point-dot"></div>Atendimento 100% especializado para médicos no Simples Nacional</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="2" data-video="YOUTUBE_ID_02" onclick="toggleModule(this)">
+  <!-- ─── MODULE 02 ─── -->
+  <div class="module-card" data-module="2" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">02</span></div>
       <div class="card-info">
         <div class="card-title">Abrindo sua Conta PJ</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            3–4 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3–4 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
     <div class="card-desc">Por que abrir conta PJ? Conheça as melhores opções: Cora, Nubank PJ, Inter PJ, BB, Bradesco e Santander. Reserve ~15% para impostos.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-2"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 02</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-2"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 02</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Sempre separe conta PJ da conta pessoal</div>
+        <div class="key-point"><div class="key-point-dot"></div>Recomendação: Banco Cora (melhor custo-benefício para PJ médica)</div>
+        <div class="key-point"><div class="key-point-dot"></div>Reserve sempre ~15% da receita bruta para impostos</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="3" data-video="YOUTUBE_ID_03" onclick="toggleModule(this)">
+  <!-- ─── MODULE 03 ─── -->
+  <div class="module-card" data-module="3" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">03</span></div>
       <div class="card-info">
         <div class="card-title">Cadastro no CRM-PJ</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2–3 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2–3 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">Registro da empresa médica no Conselho Regional de Medicina. Prazo de até 30 dias. 80% da taxa é reembolsada. A FerrariMed conduz todo o processo.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-3"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 03</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">Registro da empresa médica no CRM. Prazo de até 30 dias. 80% da taxa é reembolsada. A FerrariMed conduz todo o processo.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-3"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 03</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Prazo de até 30 dias para o registro</div>
+        <div class="key-point"><div class="key-point-dot"></div>80% da taxa de inscrição é reembolsada</div>
+        <div class="key-point"><div class="key-point-dot"></div>A FerrariMed cuida de todo o processo burocrático</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="4" data-video="YOUTUBE_ID_04" onclick="toggleModule(this)">
+  <!-- ─── MODULE 04 ─── -->
+  <div class="module-card" data-module="4" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">04</span></div>
       <div class="card-info">
         <div class="card-title">LGPD – Proteção de Dados</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
     <div class="card-desc">Lei 13.709/2018. Segurança e privacidade dos seus dados na FerrariMed. Nenhuma informação compartilhada sem autorização.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-4"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 04</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-4"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 04</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Lei 13.709/2018 garante proteção de dados pessoais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Seus dados nunca são compartilhados sem sua autorização</div>
+        <div class="key-point"><div class="key-point-dot"></div>Sistemas internos com criptografia e acesso controlado</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="5" data-video="YOUTUBE_ID_05" onclick="toggleModule(this)">
+  <!-- ─── MODULE 05 (com Calculadora) ─── -->
+  <div class="module-card" data-module="5" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">05</span></div>
       <div class="card-info">
         <div class="card-title">Entendendo o Simples Nacional</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            4–5 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4–5 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">DAS unificado a partir de 6%. Exemplos práticos: R$20k/mês → ~10,38% e R$40k/mês → ~16,95%. Reserve 15% da receita.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-5"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 05</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+    <div class="card-desc">DAS unificado a partir de 6%. Exemplos: R$20k/mês → ~10,38% e R$40k/mês → ~16,95%. Reserve 15% da receita.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-5"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 05</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
+      </div>
+
+      <!-- Idea 7: Calculadora de impostos -->
+      <div class="calc-section" onclick="event.stopPropagation()">
+        <div class="calc-title">Calculadora de Impostos — Simples Nacional</div>
+        <div class="calc-input-row">
+          <input class="calc-input" id="calcInput" type="number" inputmode="numeric" placeholder="Receita mensal (R$)" />
+          <button class="calc-btn" onclick="calcularImpostos()">Calcular</button>
+        </div>
+        <div class="calc-results" id="calcResults">
+          <div class="calc-grid">
+            <div class="calc-item">
+              <div class="calc-item-label">DAS estimado</div>
+              <div class="calc-item-value" id="calcDAS">—</div>
+            </div>
+            <div class="calc-item">
+              <div class="calc-item-label">INSS (pró-labore)</div>
+              <div class="calc-item-value" id="calcINSS">—</div>
+            </div>
+            <div class="calc-item">
+              <div class="calc-item-label">IRRF estimado</div>
+              <div class="calc-item-value" id="calcIRRF">—</div>
+            </div>
+            <div class="calc-item">
+              <div class="calc-item-label">Alíquota efetiva</div>
+              <div class="calc-item-value" id="calcAliq">—</div>
+            </div>
+            <div class="calc-item full">
+              <div class="calc-item-label">Total a reservar</div>
+              <div class="calc-item-value" id="calcTotal">—</div>
+            </div>
+          </div>
+          <div class="calc-note">* Estimativa baseada no Simples Nacional Anexo III com Fator R (pró-labore ≥ 28%). Valores podem variar conforme o faturamento acumulado dos últimos 12 meses.</div>
         </div>
       </div>
-    </div>
+
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>DAS é o imposto unificado do Simples, começa em 6%</div>
+        <div class="key-point"><div class="key-point-dot"></div>Reserve sempre 15% da receita bruta como margem de segurança</div>
+        <div class="key-point"><div class="key-point-dot"></div>Faturamento acima de R$35k/mês → avaliar Lucro Presumido</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="6" data-video="YOUTUBE_ID_06" onclick="toggleModule(this)">
+  <!-- ─── MODULE 06 ─── -->
+  <div class="module-card" data-module="6" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">06</span></div>
       <div class="card-info">
         <div class="card-title">Pró-Labore, INSS e IR</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            4–5 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4–5 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">Pró-labore mínimo de 28% para usar o Fator R (Anexo III). INSS 11% sobre pró-labore. IRRF acima de R$2.428,80 líquido.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-6"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 06</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">Pró-labore mínimo de 28% para o Fator R (Anexo III). INSS 11% sobre pró-labore. IRRF acima de R$2.428,80 líquido.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-6"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 06</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Pró-labore mínimo de 28% da receita para ativar o Fator R</div>
+        <div class="key-point"><div class="key-point-dot"></div>INSS = 11% sobre o pró-labore, teto de R$932,31 (2025)</div>
+        <div class="key-point"><div class="key-point-dot"></div>IRRF incide quando o pró-labore líquido supera R$2.428,80</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="7" data-video="YOUTUBE_ID_07" onclick="toggleModule(this)">
+  <!-- ─── MODULE 07 ─── -->
+  <div class="module-card" data-module="7" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">07</span></div>
       <div class="card-info">
         <div class="card-title">Guias Mensais: DAS, DARF e Honorários</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            3–4 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3–4 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">Três pagamentos mensais, todos com vencimento no dia 20: DAS (Simples Nacional), DARF (INSS + IR do pró-labore) e Honorários FerrariMed.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-7"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 07</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">Três pagamentos mensais, todos no dia 20: DAS (Simples Nacional), DARF (INSS + IR do pró-labore) e Honorários FerrariMed.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-7"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 07</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>3 pagamentos mensais, todos vencem no dia 20</div>
+        <div class="key-point"><div class="key-point-dot"></div>DAS varia conforme a data de emissão das NFS-e</div>
+        <div class="key-point"><div class="key-point-dot"></div>Honorários FerrariMed são fixos conforme o contrato</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="8" data-video="YOUTUBE_ID_08" onclick="toggleModule(this)">
+  <!-- ─── MODULE 08 ─── -->
+  <div class="module-card" data-module="8" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">08</span></div>
       <div class="card-info">
         <div class="card-title">Lucro Presumido vs. Simples Nacional</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            4 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>4 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
     <div class="card-desc">Lucro Presumido: PIS+COFINS+CSLL+IRPJ+ISS = ~13,33–16,33%. Avaliado caso a caso para receitas acima de R$35k/mês.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-8"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 08</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-8"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 08</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Lucro Presumido tem carga tributária de ~13,33% a 16,33%</div>
+        <div class="key-point"><div class="key-point-dot"></div>Avaliado individualmente quando receita ultrapassa R$35k/mês</div>
+        <div class="key-point"><div class="key-point-dot"></div>A FerrariMed analisa o melhor regime para seu perfil</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="9" data-video="YOUTUBE_ID_09" onclick="toggleModule(this)">
+  <!-- ─── MODULE 09 ─── -->
+  <div class="module-card" data-module="9" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">09</span></div>
       <div class="card-info">
         <div class="card-title">Taxa de Fiscalização (TFF)</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">Taxa anual de licença de funcionamento municipal (TFF, TFEL ou TLFV). Pode haver cobrança adicional em alterações contratuais.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-9"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 09</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">Taxa anual de licença de funcionamento municipal (TFF, TFEL ou TLFV). Pode haver cobrança em alterações contratuais.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-9"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 09</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Taxa municipal anual obrigatória para funcionamento</div>
+        <div class="key-point"><div class="key-point-dot"></div>Pode ser chamada de TFF, TFEL ou TLFV conforme o município</div>
+        <div class="key-point"><div class="key-point-dot"></div>Alterações contratuais podem gerar cobranças adicionais</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="10" data-video="YOUTUBE_ID_10" onclick="toggleModule(this)">
+  <!-- ─── MODULE 10 ─── -->
+  <div class="module-card" data-module="10" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">10</span></div>
       <div class="card-info">
         <div class="card-title">Como Falar com Nossa Equipe</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2–3 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2–3 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">WhatsApp oficial: (17) 3556-1190. Seg–Qui 08h–17h, Sex 08h–16h. Menu: 1=Financeiro, 2=Pessoal, 3=NFS-e, 4=Atendente e mais.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-10"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 10</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">WhatsApp: (17) 3556-1190. Seg–Qui 08h–17h, Sex 08h–16h. Menu: 1=Financeiro, 2=Pessoal, 3=NFS-e, 4=Atendente e mais.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-10"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 10</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>WhatsApp oficial: (17) 3556-1190</div>
+        <div class="key-point"><div class="key-point-dot"></div>Horário: Seg–Qui 08h–17h | Sex 08h–16h</div>
+        <div class="key-point"><div class="key-point-dot"></div>Menu 0=Recálculo | 1=Financeiro | 3=NFS-e | 4=Atendente</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="11" data-video="YOUTUBE_ID_11" onclick="toggleModule(this)">
+  <!-- ─── MODULE 11 ─── -->
+  <div class="module-card" data-module="11" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">11</span></div>
       <div class="card-info">
         <div class="card-title">Calendário Financeiro e Guias</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2–3 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2–3 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
     <div class="card-desc">Guias enviadas nas primeiras duas semanas via WhatsApp, e-mail e App Onvio/Client Center. Vencimento sempre no dia 20.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-11"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 11</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-11"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 11</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Guias enviadas nas primeiras 2 semanas de cada mês</div>
+        <div class="key-point"><div class="key-point-dot"></div>Canais: WhatsApp, e-mail e App Onvio/Client Center</div>
+        <div class="key-point"><div class="key-point-dot"></div>Vencimento sempre no dia 20 (ou dia útil anterior em feriados)</div>
+      </div></div>
+    </div></div>
   </div>
 
-  <div class="module-card" data-module="12" data-video="YOUTUBE_ID_12" onclick="toggleModule(this)">
+  <!-- ─── MODULE 12 ─── -->
+  <div class="module-card" data-module="12" onclick="toggleModule(this)">
     <div class="card-header">
       <div class="module-number"><span class="num-label">MOD</span><span class="num-value">12</span></div>
       <div class="card-info">
         <div class="card-title">Indicação e Ecossistema FerrariMed</div>
         <div class="card-meta">
-          <span class="card-duration">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            2–3 min
-          </span>
+          <span class="card-duration"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2–3 min</span>
           <span class="watched-badge">✓ Assistido</span>
         </div>
       </div>
-      <div class="card-chevron">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
-      </div>
+      <div class="card-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></div>
     </div>
-    <div class="card-desc">Programa de indicação com pagamento cumulativo. Ecossistema: Seguro RC, Certificado Digital, Licitações, Saúde e Segurança do Trabalho.</div>
-    <div class="player-wrap">
-      <div class="player-inner">
-        <div class="player-divider"></div>
-        <div class="video-container" id="vc-12"></div>
-        <div class="player-actions">
-          <span class="player-label">Módulo 12</span>
-          <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
-        </div>
+    <div class="card-desc">Programa de indicação com pagamento cumulativo. Ecossistema: Seguro RC, Certificado Digital, Licitações, SST.</div>
+    <div class="player-wrap"><div class="player-inner">
+      <div class="player-divider"></div>
+      <div class="video-container" id="vc-12"></div>
+      <div class="player-actions">
+        <span class="player-label">Módulo 12</span>
+        <button class="mark-watched-btn" onclick="markWatched(event, this.closest('.module-card'))">✓ Marcar como assistido</button>
       </div>
-    </div>
+      <div class="key-points"><div class="key-points-inner">
+        <div class="key-points-title">Pontos principais</div>
+        <div class="key-point"><div class="key-point-dot"></div>Indique médicos e receba pagamento cumulativo por cada um</div>
+        <div class="key-point"><div class="key-point-dot"></div>Serviços do ecossistema: Seguro RC e Certificado Digital</div>
+        <div class="key-point"><div class="key-point-dot"></div>Também: Licitações, LTCAT, PCMSO e e-Social disponíveis</div>
+      </div></div>
+    </div></div>
   </div>
 
 </main>
 
-<!-- ═══ FOOTER BAR ═══ -->
+<!-- ═══ FOOTER ═══ -->
 <div class="footer-bar">
   <div class="footer-info">
     <span>Dúvidas?</span>
@@ -909,16 +883,48 @@
   </a>
 </div>
 
+<!-- ═══ GLOSSÁRIO (Idea 8) ═══ -->
+<button class="glossary-fab" onclick="openGlossary()" title="Glossário">?</button>
+
+<div class="glossary-backdrop" id="glossaryBackdrop" onclick="closeGlossary()"></div>
+<div class="glossary-sheet" id="glossarySheet">
+  <div class="glossary-handle"></div>
+  <div class="glossary-header">
+    <h3>Glossário</h3>
+    <button class="glossary-close" onclick="closeGlossary()">✕</button>
+  </div>
+  <div class="glossary-list">
+    <div class="glossary-item"><div class="glossary-term">DAS</div><div class="glossary-def">Documento de Arrecadação do Simples Nacional — guia unificada que reúne todos os impostos em um único pagamento mensal.</div></div>
+    <div class="glossary-item"><div class="glossary-term">DARF</div><div class="glossary-def">Documento de Arrecadação de Receitas Federais — guia usada para pagar o INSS e o IRRF incidentes sobre o pró-labore.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Fator R</div><div class="glossary-def">Mecanismo que mantém a empresa no Anexo III do Simples (alíquotas menores) quando o pró-labore representa no mínimo 28% da receita bruta.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Pró-Labore</div><div class="glossary-def">Remuneração do sócio administrador — equivale ao "salário" do médico dono da empresa. Base de cálculo do INSS e do IR.</div></div>
+    <div class="glossary-item"><div class="glossary-term">INSS</div><div class="glossary-def">Contribuição previdenciária: 11% sobre o pró-labore, com teto de R$932,31 (2025). Garante benefícios como aposentadoria e auxílio-doença.</div></div>
+    <div class="glossary-item"><div class="glossary-term">IRRF</div><div class="glossary-def">Imposto de Renda Retido na Fonte sobre o pró-labore. Incide quando o valor líquido supera R$2.428,80/mês, com alíquotas de 7,5% a 27,5%.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Simples Nacional</div><div class="glossary-def">Regime tributário simplificado para empresas com faturamento até R$4,8 milhões/ano. Unifica impostos em uma única guia (DAS).</div></div>
+    <div class="glossary-item"><div class="glossary-term">Lucro Presumido</div><div class="glossary-def">Regime tributário alternativo ao Simples. Avaliado quando a receita ultrapassa R$35k/mês — pode ser mais vantajoso em certos perfis.</div></div>
+    <div class="glossary-item"><div class="glossary-term">NFS-e</div><div class="glossary-def">Nota Fiscal de Serviços eletrônica — documento obrigatório emitido a cada atendimento ou prestação de serviço médico.</div></div>
+    <div class="glossary-item"><div class="glossary-term">CRM-PJ</div><div class="glossary-def">Registro da pessoa jurídica (empresa) no Conselho Regional de Medicina — obrigatório para a empresa prestar serviços médicos.</div></div>
+    <div class="glossary-item"><div class="glossary-term">TFF / TFEL</div><div class="glossary-def">Taxa de Fiscalização e Funcionamento — licença anual emitida pelo município para autorizar o funcionamento da empresa.</div></div>
+    <div class="glossary-item"><div class="glossary-term">LGPD</div><div class="glossary-def">Lei Geral de Proteção de Dados Pessoais (Lei 13.709/2018) — regula como dados pessoais e sensíveis podem ser coletados e usados.</div></div>
+  </div>
+</div>
+
+<!-- ═══ TOAST (Idea 12) ═══ -->
+<div class="toast" id="toast">
+  <div class="toast-icon">🔔</div>
+  <div class="toast-body">
+    <strong id="toastTitle">Bem-vindo de volta!</strong>
+    <span id="toastMsg">Você ainda tem módulos para concluir. Continue de onde parou.</span>
+  </div>
+  <button class="toast-close" onclick="closeToast()">✕</button>
+</div>
+
 <script>
-  // ─── Configuração dos vídeos ─────────────────────────────────────────────
-  // Para cada módulo defina: { id: 'ID_DO_VIDEO', plataforma: 'vimeo' ou 'youtube' }
-  //
-  // VIMEO  → o ID é o número na URL: vimeo.com/76979871  →  id: '76979871'
-  // YOUTUBE → o ID vem após ?v=:    youtu.be/dQw4w9WgXcQ  →  id: 'dQw4w9WgXcQ'
-  //
+  // ─── Configuração dos vídeos ───────────────────────────────────────────────
+  // plataforma: 'youtube' ou 'vimeo'
   const VIDEO_IDS = {
-    1:  { id: '1174571809',   plataforma: 'vimeo' }, // ← módulo 01 já adicionado
-    2:  { id: '1174571809', plataforma: 'vimeo' },
+    1:  { id: '1174571809',   plataforma: 'vimeo' },
+    2:  { id: '1174571809',   plataforma: 'vimeo' },
     3:  { id: 'YOUTUBE_ID_03', plataforma: 'youtube' },
     4:  { id: 'YOUTUBE_ID_04', plataforma: 'youtube' },
     5:  { id: 'YOUTUBE_ID_05', plataforma: 'youtube' },
@@ -931,48 +937,124 @@
     12: { id: 'YOUTUBE_ID_12', plataforma: 'youtube' },
   };
 
-  let currentOpen = null;
-  const WATCHED_KEY = 'ferrarimed_watched';
+  // Idea 4: duração em minutos por módulo (ponto médio)
+  const DURATIONS = { 1:2.5, 2:3.5, 3:2.5, 4:2, 5:4.5, 6:4.5, 7:3.5, 8:4, 9:2, 10:2.5, 11:2.5, 12:2.5 };
+
+  const MODULE_TITLES = {
+    1:'Boas-Vindas à FerrariMed', 2:'Abrindo sua Conta PJ', 3:'Cadastro no CRM-PJ',
+    4:'LGPD – Proteção de Dados', 5:'Entendendo o Simples Nacional', 6:'Pró-Labore, INSS e IR',
+    7:'Guias Mensais: DAS, DARF e Honorários', 8:'Lucro Presumido vs. Simples Nacional',
+    9:'Taxa de Fiscalização (TFF)', 10:'Como Falar com Nossa Equipe',
+    11:'Calendário Financeiro e Guias', 12:'Indicação e Ecossistema FerrariMed'
+  };
+
+  // ─── State ────────────────────────────────────────────────────────────────
+  let currentOpen   = null;
+  const WATCHED_KEY  = 'ferrarimed_watched';
+  const VISIT_KEY    = 'ferrarimed_last_visit';
+  const NOTIF_KEY    = 'ferrarimed_notif';
+  const PWA_KEY      = 'ferrarimed_pwa_dismissed';
+
   let watchedSet = new Set(JSON.parse(localStorage.getItem(WATCHED_KEY) || '[]'));
+  let deferredPWA = null;
 
-  // Restore watched state on load
-  document.querySelectorAll('.module-card').forEach(card => {
-    const mod = parseInt(card.dataset.module);
-    if (watchedSet.has(mod)) card.classList.add('watched');
+  // ─── Init ─────────────────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    applyWatchedState();
+    applyLockState();   // Idea 9
+    updateProgress();
+    renderContinueCard(); // Idea 2
+    checkReturnReminder(); // Idea 12
+    initPWA();            // Idea 5
+    localStorage.setItem(VISIT_KEY, Date.now());
   });
-  updateProgress();
 
+  // ─── Idea 9: Sequential Lock ──────────────────────────────────────────────
+  function applyLockState() {
+    document.querySelectorAll('.module-card').forEach(card => {
+      const mod = parseInt(card.dataset.module);
+      const isLocked = mod > 1 && !watchedSet.has(mod - 1);
+      card.classList.toggle('locked', isLocked);
+
+      // Swap chevron for lock icon on locked cards
+      const chevron = card.querySelector('.card-chevron');
+      if (isLocked) {
+        chevron.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>`;
+      } else {
+        chevron.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B6B6B" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+      }
+    });
+  }
+
+  // ─── Watched State Restore ────────────────────────────────────────────────
+  function applyWatchedState() {
+    document.querySelectorAll('.module-card').forEach(card => {
+      const mod = parseInt(card.dataset.module);
+      if (watchedSet.has(mod)) card.classList.add('watched');
+    });
+  }
+
+  // ─── Idea 2: Continue Card ────────────────────────────────────────────────
+  function renderContinueCard() {
+    const slot = document.getElementById('continueCardSlot');
+    const nextMod = getNextModule();
+    if (!nextMod) { slot.innerHTML = ''; return; }
+
+    slot.innerHTML = `
+      <button class="continue-card" onclick="scrollToModule(${nextMod})">
+        <div class="continue-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="continue-text">
+          <div class="continue-label">Continue de onde parou</div>
+          <div class="continue-title">Módulo ${String(nextMod).padStart(2,'0')} — ${MODULE_TITLES[nextMod]}</div>
+        </div>
+        <div class="continue-arrow">›</div>
+      </button>`;
+  }
+
+  function getNextModule() {
+    for (let i = 1; i <= 12; i++) {
+      if (!watchedSet.has(i)) return i;
+    }
+    return null; // all done
+  }
+
+  function scrollToModule(mod) {
+    const card = document.querySelector(`.module-card[data-module="${mod}"]`);
+    if (card) {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => { if (!card.classList.contains('locked')) toggleModule(card); }, 400);
+    }
+  }
+
+  // ─── Player Builder ───────────────────────────────────────────────────────
   function buildIframe(video) {
     const { id, plataforma } = video;
     if (plataforma === 'vimeo') {
-      return `<iframe
-        src="https://player.vimeo.com/video/${id}?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&dnt=1"
-        allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-      ></iframe>`;
+      return `<iframe src="https://player.vimeo.com/video/${id}?autoplay=1&title=0&byline=0&portrait=0&badge=0&autopause=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
     }
-    // YouTube — parâmetros que minimizam branding e sugestões
-    return `<iframe
-      src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen
-      loading="lazy"
-    ></iframe>`;
+    return `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&color=white" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
   }
 
+  // ─── Toggle Module ────────────────────────────────────────────────────────
   function toggleModule(card) {
-    const mod = parseInt(card.dataset.module);
-    const vcEl = document.getElementById('vc-' + mod);
-    const video = VIDEO_IDS[mod];
-    const isOpen = card.classList.contains('active');
+    const mod     = parseInt(card.dataset.module);
+    const vcEl    = document.getElementById('vc-' + mod);
+    const video   = VIDEO_IDS[mod];
+    const isOpen  = card.classList.contains('active');
 
-    // Close any open card & stop its video
+    // Idea 9: block locked cards
+    if (card.classList.contains('locked')) {
+      showToast('🔒 Módulo bloqueado', `Conclua o Módulo ${String(mod-1).padStart(2,'0')} primeiro para liberar este.`);
+      return;
+    }
+
+    // Close previous
     if (currentOpen && currentOpen !== card) {
       const prevMod = parseInt(currentOpen.dataset.module);
       currentOpen.classList.remove('active');
-      const prevVc = document.getElementById('vc-' + prevMod);
-      prevVc.innerHTML = '';
+      document.getElementById('vc-' + prevMod).innerHTML = '';
     }
 
     if (isOpen) {
@@ -985,47 +1067,195 @@
       currentOpen = card;
 
       const isPlaceholder = video.id.startsWith('YOUTUBE_ID_') || video.id.startsWith('VIMEO_ID_');
-      if (isPlaceholder) {
-        const label = video.plataforma === 'vimeo' ? 'Vimeo' : 'YouTube';
-        vcEl.innerHTML = `
-          <div class="video-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg>
-            <p>Vídeo em breve.<br>Cole o ID do ${label} no código.</p>
-          </div>`;
-      } else {
-        vcEl.innerHTML = buildIframe(video);
-      }
+      const label = video.plataforma === 'vimeo' ? 'Vimeo' : 'YouTube';
+      vcEl.innerHTML = isPlaceholder
+        ? `<div class="video-placeholder"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white" stroke="none"/></svg><p>Vídeo em breve.<br>Cole o ID do ${label} no código.</p></div>`
+        : buildIframe(video);
 
       setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
     }
   }
 
+  // ─── Mark Watched ─────────────────────────────────────────────────────────
   function markWatched(event, card) {
-    event.stopPropagation(); // Don't toggle the card
+    event.stopPropagation();
     const mod = parseInt(card.dataset.module);
-    if (!watchedSet.has(mod)) {
-      watchedSet.add(mod);
-      card.classList.add('watched');
-      localStorage.setItem(WATCHED_KEY, JSON.stringify([...watchedSet]));
-      updateProgress();
+    if (watchedSet.has(mod)) return;
 
-      // Button feedback
-      const btn = card.querySelector('.mark-watched-btn');
-      btn.textContent = '✓ Assistido!';
-      setTimeout(() => { btn.textContent = '✓ Marcar como assistido'; }, 1500);
+    watchedSet.add(mod);
+    card.classList.add('watched');
+    localStorage.setItem(WATCHED_KEY, JSON.stringify([...watchedSet]));
+
+    updateProgress();
+    applyLockState();    // unlock next module
+    renderContinueCard(); // update continue card
+
+    const btn = card.querySelector('.mark-watched-btn');
+    btn.textContent = '✓ Assistido!';
+    setTimeout(() => { btn.textContent = '✓ Marcar como assistido'; }, 1800);
+  }
+
+  // ─── Progress (Idea 4 included) ───────────────────────────────────────────
+  function updateProgress() {
+    const total = 12;
+    const done  = watchedSet.size;
+    const pct   = Math.round((done / total) * 100);
+
+    document.getElementById('progressBar').style.width   = pct + '%';
+    document.getElementById('progressBadge').textContent = `${done} / ${total}`;
+    document.getElementById('progressLabel').textContent = done === total
+      ? '🎉 Onboarding concluído!'
+      : `${done} de ${total} módulos concluídos`;
+
+    // Idea 4: time remaining
+    let remaining = 0;
+    for (let i = 1; i <= 12; i++) {
+      if (!watchedSet.has(i)) remaining += DURATIONS[i];
+    }
+    const tr = document.getElementById('timeRemainingText');
+    if (remaining === 0) {
+      document.getElementById('timeRemaining').style.display = 'none';
+    } else {
+      tr.textContent = `~${Math.round(remaining)} min restantes`;
     }
   }
 
-  function updateProgress() {
-    const total = 12;
-    const done = watchedSet.size;
-    const pct = Math.round((done / total) * 100);
-    document.getElementById('progressBar').style.width = pct + '%';
-    document.getElementById('progressLabel').textContent =
-      done === total
-        ? '🎉 Todos os módulos concluídos!'
-        : `${done} de ${total} módulos concluídos`;
-    document.getElementById('progressBadge').textContent = `${done} / ${total}`;
+  // ─── Idea 7: Calculadora de Impostos ─────────────────────────────────────
+  function calcularImpostos() {
+    const receita = parseFloat(document.getElementById('calcInput').value);
+    if (!receita || receita <= 0) { document.getElementById('calcInput').focus(); return; }
+
+    const rbt12 = receita * 12;
+
+    // Simples Nacional Anexo III (com Fator R)
+    const faixas = [
+      { limite: 180000,  aliquota: 0.060, deducao: 0       },
+      { limite: 360000,  aliquota: 0.112, deducao: 9360    },
+      { limite: 720000,  aliquota: 0.135, deducao: 17640   },
+      { limite: 1800000, aliquota: 0.160, deducao: 35640   },
+      { limite: 3600000, aliquota: 0.210, deducao: 125640  },
+      { limite: 4800000, aliquota: 0.330, deducao: 648000  },
+    ];
+    let faixa = faixas[faixas.length - 1];
+    for (const f of faixas) { if (rbt12 <= f.limite) { faixa = f; break; } }
+
+    const efetiva = Math.max((rbt12 * faixa.aliquota - faixa.deducao) / rbt12, 0.06);
+    const das     = receita * efetiva;
+
+    // Pró-labore e INSS
+    const prolabore = receita * 0.28;
+    const inss      = Math.min(prolabore * 0.11, 932.31);
+
+    // IRRF 2025
+    const base = prolabore - inss;
+    let irrf = 0;
+    if      (base > 4664.68) irrf = base * 0.275 - 908.74;
+    else if (base > 3751.05) irrf = base * 0.225 - 675.49;
+    else if (base > 2826.65) irrf = base * 0.150 - 394.16;
+    else if (base > 2428.80) irrf = base * 0.075 - 182.16;
+    irrf = Math.max(irrf, 0);
+
+    const total = das + inss + irrf;
+
+    const fmt = v => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    document.getElementById('calcDAS').textContent  = fmt(das);
+    document.getElementById('calcINSS').textContent = fmt(inss);
+    document.getElementById('calcIRRF').textContent = fmt(irrf);
+    document.getElementById('calcAliq').textContent = (efetiva * 100).toFixed(2).replace('.', ',') + '%';
+    document.getElementById('calcTotal').textContent = fmt(total);
+    document.getElementById('calcResults').classList.add('show');
+  }
+
+  // Enter key on calculator
+  document.getElementById('calcInput').addEventListener('keydown', e => { if (e.key === 'Enter') calcularImpostos(); });
+
+  // ─── Glossário (Idea 8) ───────────────────────────────────────────────────
+  function openGlossary() {
+    document.getElementById('glossaryBackdrop').classList.add('show');
+    document.getElementById('glossarySheet').classList.add('show');
+  }
+  function closeGlossary() {
+    document.getElementById('glossaryBackdrop').classList.remove('show');
+    document.getElementById('glossarySheet').classList.remove('show');
+  }
+
+  // ─── Toast ────────────────────────────────────────────────────────────────
+  let toastTimer = null;
+  function showToast(title, msg, duration = 4000) {
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMsg').textContent   = msg;
+    document.getElementById('toast').classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(closeToast, duration);
+  }
+  function closeToast() {
+    document.getElementById('toast').classList.remove('show');
+  }
+
+  // ─── Idea 12: Return Reminder + Notification ─────────────────────────────
+  function checkReturnReminder() {
+    const lastVisit = parseInt(localStorage.getItem(VISIT_KEY) || '0');
+    const now       = Date.now();
+    const hoursSince = (now - lastVisit) / (1000 * 60 * 60);
+    const hasUnfinished = watchedSet.size < 12;
+
+    if (lastVisit && hoursSince >= 48 && hasUnfinished) {
+      const remaining = 12 - watchedSet.size;
+      setTimeout(() => {
+        showToast('Bem-vindo de volta! 👋', `Você ainda tem ${remaining} módulo${remaining > 1 ? 's' : ''} para concluir. Continue de onde parou.`, 6000);
+      }, 1500);
+    }
+
+    // Request notification permission after 8 seconds (first visit only)
+    if (!localStorage.getItem(NOTIF_KEY) && hasUnfinished && 'Notification' in window) {
+      setTimeout(async () => {
+        if (Notification.permission === 'default') {
+          const perm = await Notification.requestPermission();
+          localStorage.setItem(NOTIF_KEY, perm);
+        }
+      }, 8000);
+    }
+  }
+
+  // ─── Idea 5: PWA Install ─────────────────────────────────────────────────
+  function initPWA() {
+    if (localStorage.getItem(PWA_KEY)) return;
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPWA = e;
+      document.getElementById('pwaBanner').classList.add('show');
+    });
+
+    document.getElementById('pwaInstallBtn').addEventListener('click', async () => {
+      if (!deferredPWA) return;
+      deferredPWA.prompt();
+      const { outcome } = await deferredPWA.userChoice;
+      if (outcome === 'accepted') localStorage.setItem(PWA_KEY, '1');
+      document.getElementById('pwaBanner').classList.remove('show');
+      deferredPWA = null;
+    });
+
+    document.getElementById('pwaDismissBtn').addEventListener('click', () => {
+      localStorage.setItem(PWA_KEY, '1');
+      document.getElementById('pwaBanner').classList.remove('show');
+    });
+
+    // iOS — show manually since beforeinstallprompt doesn't fire
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isStandalone = window.navigator.standalone;
+    if (isIOS && !isStandalone && !localStorage.getItem(PWA_KEY)) {
+      setTimeout(() => {
+        showToast('📲 Instalar como App', 'Toque em "Compartilhar" e depois "Adicionar à Tela de Início" para instalar.', 7000);
+      }, 3000);
+    }
+  }
+
+  // ─── Service Worker (Idea 5) ──────────────────────────────────────────────
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
   }
 </script>
 </body>

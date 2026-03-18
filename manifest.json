@@ -1,0 +1,26 @@
+{
+  "name": "FerrariMed Onboarding",
+  "short_name": "FerrariMed",
+  "description": "Plataforma de onboarding FerrariMed Contabilidade",
+  "start_url": "/ferrarimed-onboarding/",
+  "scope": "/ferrarimed-onboarding/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#CC0000",
+  "theme_color": "#CC0000",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
